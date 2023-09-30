@@ -10,14 +10,28 @@ router.get("/phones", (req, res, next) => {
     "utf8",
     function (err, data) {
       if (err) throw err;
-      res.json(data);
+      res.json(JSON.parse(data));
     }
   );
 });
 
 //GET PHONE BY ID
 router.get("/phones/:id", (req, res, next) => {
-  res.send("Phone 1", 200);
+  const { id } = req.params;
+  let phone;
+  const phones = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../data/phones.json"), "utf8")
+  );
+  phones.forEach((e) => {
+    if (e.id.toString() === id) {
+      phone = e;
+    }
+  });
+  if (phone) {
+    res.json(phone);
+  } else {
+    res.send(404);
+  }
 });
 
 module.exports = router;
