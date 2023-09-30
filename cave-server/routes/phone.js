@@ -15,4 +15,9 @@ router.get("/phones", (req, res, next) => {
   );
 });
 
+//GET PHONE BY ID
+router.get("/phones/:id", (req, res, next) => {
+  res.send("Phone 1", 200);
+});
+
 module.exports = router;
